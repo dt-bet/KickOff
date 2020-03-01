@@ -8,17 +8,40 @@ namespace KickOff.App
     {
         public static void Main(string[] args)
         {
+            SQLitePCL.Batteries.Init();
             try
             {
-                ScrapeUtility.ScrapeByType(ScrapeUtility.Type.Fixture);
-                ScrapeUtility.ScrapeByType(ScrapeUtility.Type.Result);
+                if (args.Length == 0)
+                {
+                    try
+                    {
+                        ScrapeUtility.ScrapeByType(ScrapeUtility.Type.Fixture);
+                        ScrapeUtility.ScrapeByType(ScrapeUtility.Type.Result);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Write(ex.Message);
+                        Console.ReadLine();
+                    }
+                }
+                else if (args[0] == "evaluate")
+                {
+                    Main2(args);
+                }
+                else if (args[0] == "process")
+                {
+                    Main3(args);
+                }
+                else if (args[0] == "process_failures")
+                {
+                    ScrapeUtility.ProcessFailures();
+                }
             }
             catch (Exception ex)
             {
-                Console.Write(ex.Message);
-                Console.ReadLine();
+                Console.WriteLine(ex.StackTrace);
+                Console.Read();
             }
-            
         }
 
 

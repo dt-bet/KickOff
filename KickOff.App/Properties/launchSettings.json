@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "KickOff.App": {
+      "commandName": "Project",
+      "commandLineArgs": "process_failures"
+    }
+  }
+}
