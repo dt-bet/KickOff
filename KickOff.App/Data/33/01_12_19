@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>IT Serie A matches &ndash; Kickoff.ai: predicting football matches</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/static/img/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/static/img/favicons/safari-pinned-tab.svg" color="#00bf7c">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" type="text/css" href="/static/css/application.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/dygraph.css">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed:300,400,600|IBM+Plex+Sans:300,400" rel="stylesheet">
+  <script type="text/javascript" src="/static/js/application.js"></script>
+  <script type="text/javascript" src="/static/js/dygraph.min.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-77259424-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-77259424-1');
+  </script>
+</head>
+
+<body class="">
+  
+  <!-- site-header -->
+<header class="site-header">
+  <div class="container-ko">
+    <div class="d-flex">
+      <div class="site-brand">
+        <a class="logo-kickoffai" href="/"><span>Kickoff.ai</span></a>
+      </div>
+
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/matches">Matches</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/teams">Teams</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://blog.kickoff.ai">Blog</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-flex">
+      <form action="/search-team" method="post">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><img src="/static/img/icon-search.svg"></span>
+          </div>
+          <input type="text" class="form-control" placeholder="Search teams..." aria-label="" aria-describedby="" style="border-left: none;"
+              name="query" value="">
+        </div>
+      </form>
+
+      <div class="dropdown">
+        <button class="site-header-toggler" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="site-header-toggler-icon">
+            <img src="/static/img/icon-menu.svg" alt="Menu">
+          </span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="">
+          <a class="dropdown-item" href="/matches#">Matches</a>
+          <a class="dropdown-item" href="/teams">Teams</a>
+          <a class="dropdown-item" href="/about">About</a>
+          <a class="dropdown-item" href="https://blog.kickoff.ai">Blog</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+<!-- /site-header -->
+
+  <!-- masthead -->
+  <div class="masthead">
+    <div class="container-ko">
+      <h1>Matches</h1>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          IT Serie A
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/matches">All competitions</a>
+          
+            <a class="dropdown-item" href="/matches/31">DE Bundesliga</a>
+          
+            <a class="dropdown-item" href="/matches/29">ES La Liga</a>
+          
+            <a class="dropdown-item" href="/matches/2">Friendlies</a>
+          
+            <a class="dropdown-item" href="/matches/35">FR Ligue 1</a>
+          
+            <a class="dropdown-item" href="/matches/33">IT Serie A</a>
+          
+            <a class="dropdown-item" href="/matches/27">UK Premier League</a>
+          
+            <a class="dropdown-item" href="/matches/14">World Cup</a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /masthead -->
+
+  
+
+<!-- matches -->
+<div id="matches" class="section">
+  <div class="container-ko clearfix">
+
+    <!-- fixtures -->
+    <div class="col-hlf-ko">
+      <div class="section-header border-bottom">
+        <h3>Upcoming matches</h3>
+      </div>
+      
+      <!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/64948">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Verona</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home">18%</span>
+    <span class="prediction-draw text-muted">27%</span>
+    <span class="prediction-win-away text-scale-100">55%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 18%"
+          aria-valuenow="18" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 27%"
+        aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 55%"
+          aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Roma wins (55 %)"></div>
+  </div>
+
+        <div class="match-time-list">
+          19:45 01 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Roma</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/64955">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Cagliari</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">46%</span>
+    <span class="prediction-draw text-muted">30%</span>
+    <span class="prediction-win-away">24%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 46%"
+          aria-valuenow="46" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Cagliari wins (46 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 30%"
+        aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 24%"
+          aria-valuenow="24" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          19:45 02 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Sampdoria</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/64979">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Inter Milan</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">48%</span>
+    <span class="prediction-draw text-muted">29%</span>
+    <span class="prediction-win-away">23%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 48%"
+          aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Inter Milan wins (48 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 29%"
+        aria-valuenow="29" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 23%"
+          aria-valuenow="23" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          19:45 06 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Roma</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/64997">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Atalanta</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">75%</span>
+    <span class="prediction-draw text-muted">17%</span>
+    <span class="prediction-win-away">8%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 75%"
+          aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Atalanta wins (75 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 17%"
+        aria-valuenow="17" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 8%"
+          aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          14:00 07 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Verona</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/64998">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Udinese</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home">17%</span>
+    <span class="prediction-draw text-muted">27%</span>
+    <span class="prediction-win-away text-scale-100">56%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 17%"
+          aria-valuenow="17" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 27%"
+        aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 56%"
+          aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Napoli wins (56 %)"></div>
+  </div>
+
+        <div class="match-time-list">
+          17:00 07 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Napoli</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/64999">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Lazio</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home">35%</span>
+    <span class="prediction-draw text-muted">30%</span>
+    <span class="prediction-win-away">35%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 35%"
+          aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 30%"
+        aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 35%"
+          aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          19:45 07 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Juventus</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65013">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Lecce</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">47%</span>
+    <span class="prediction-draw text-muted">29%</span>
+    <span class="prediction-win-away">24%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 47%"
+          aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Lecce wins (47 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 29%"
+        aria-valuenow="29" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 24%"
+          aria-valuenow="24" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          11:30 08 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Genoa</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65014">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Sassuolo</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">40%</span>
+    <span class="prediction-draw text-muted">30%</span>
+    <span class="prediction-win-away">30%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 40%"
+          aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Sassuolo wins (40 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 30%"
+        aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 30%"
+          aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          14:00 08 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Cagliari</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture -->
+
+      <div class="btn-container-md">
+          <button type="button" class="btn btn-secondary btn-block mt-5 more-matches"
+              data-url="/more-matches?which=fixtures&amp;cid=33&amp;offset=8">Show more</button>
+        </div>
+    </div>
+    <!-- /fixtures -->
+
+    <!-- results -->
+    <div class="col-hlf-ko">
+      <div class="section-header border-bottom">
+        <h3>Past results</h3>
+      </div>
+
+      <!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/64947">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Napoli</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          1 : 2
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 69%"
+          aria-valuenow="69" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 21%"
+          aria-valuenow="21" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-500" role="progressbar" style="width: 10%"
+          aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 10%.<br>That&#39;s quite a surprise!"></div>
+  </div>
+
+        <div class="match-time-list">
+          17:00 01 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Bologna</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/64944">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Lazio</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          3 : 0
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 71%"
+          aria-valuenow="71" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 71%.<br>We aced it!"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 19%"
+          aria-valuenow="19" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 10%"
+          aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          14:00 01 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Udinese</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/64945">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Parma</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          0 : 1
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 32%"
+          aria-valuenow="32" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 30%"
+          aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-300" role="progressbar" style="width: 38%"
+          aria-valuenow="38" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 38%.<br>That went as expected."></div>
+  </div>
+
+        <div class="match-time-list">
+          14:00 01 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">AC Milan</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/64946">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Inter Milan</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          2 : 1
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 74%"
+          aria-valuenow="74" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 74%.<br>We aced it!"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 18%"
+          aria-valuenow="18" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 8%"
+          aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          14:00 01 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">SPAL</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/64943">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Juventus</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          2 : 2
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 74%"
+          aria-valuenow="74" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-500" role="progressbar" style="width: 18%"
+          aria-valuenow="18" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 18%.<br>That&#39;s quite a surprise!"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 8%"
+          aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          11:30 01 December
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Sassuolo</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/64929">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Fiorentina</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          0 : 1
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 53%"
+          aria-valuenow="53" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 28%"
+          aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-500" role="progressbar" style="width: 19%"
+          aria-valuenow="19" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 19%.<br>That&#39;s quite a surprise!"></div>
+  </div>
+
+        <div class="match-time-list">
+          19:45 30 November
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Lecce</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/64928">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Genoa</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          0 : 1
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 31%"
+          aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 30%"
+          aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-300" role="progressbar" style="width: 39%"
+          aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 39%.<br>That went as expected."></div>
+  </div>
+
+        <div class="match-time-list">
+          17:00 30 November
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Torino</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/64927">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-it"></span><span class="team-name">Brescia</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          0 : 3
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 16%"
+          aria-valuenow="16" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 26%"
+          aria-valuenow="26" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 58%"
+          aria-valuenow="58" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 58%.<br>We aced it!"></div>
+  </div>
+
+        <div class="match-time-list">
+          14:00 30 November
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Atalanta</span><span class="flag-icon flag-icon-it"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result -->
+
+      <div class="btn-container-md">
+          <button type="button" class="btn btn-secondary btn-block mt-5 more-matches"
+              data-url="/more-matches?which=results&amp;cid=33&amp;offset=8">Show more</button>
+        </div>
+    </div>
+    <!-- /results -->
+
+  </div>
+
+  <div class="container-ko btn-container">
+      <button type="button" class="btn btn-secondary btn-block mt-5 more-matches-all">Show more</button>
+    </div>
+</div>
+<!-- /matches -->
+
+  <!-- site-footer -->
+<footer class="site-footer clearfix">
+  <div class="container-ko">
+    <div class="col-hlf-ko section-newsletter">
+      <h6 class="mb-4">Stay tuned by email</h6>
+
+      <form action="https://kickoff.us13.list-manage.com/subscribe/post?u=e1aea58fcff35871e609d0ae2&amp;id=a7628c9b37" method="post"
+          id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="input-group" target="_blank" novalidate>
+	    <input type="email" class="form-control" placeholder="Your e-mail address" aria-label="" aria-describedby=""
+            value="" name="EMAIL" id="mce-EMAIL">
+        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <input type="text" name="b_e1aea58fcff35871e609d0ae2_a7628c9b37" tabindex="-1" value="">
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-secondary" type="submit"><img src="/static/img/icon-arrow-right.svg"></button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-hlf-ko d-flex justify-content-between">
+      <div class="section-connect">
+        <h6 class="mb-4">Connect</h6>
+
+        <a href="https://www.facebook.com/KickoffAI" class="btn btn-secondary btn-only-icon"><span>Facebook</span><img src="/static/img/icon-facebook.svg"></a>
+        <a href="https://twitter.com/KickoffAI" class="btn btn-secondary btn-only-icon"><span>Twitter</span><img src="/static/img/icon-twitter.svg"></a>
+      </div>
+      <div class="text-right section-sponsored">
+        <h6 class="mb-4">Sponsored by</h6>
+
+        <a href="https://www.epfl.ch/"><img src="/static/img/logo-epfl.svg" class="logo-epfl " alt="EPFL"></a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+<!-- /site-footer -->
+
+</body>
+</html>

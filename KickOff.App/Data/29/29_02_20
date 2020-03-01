@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ES La Liga matches &ndash; Kickoff.ai: predicting football matches</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/static/img/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/static/img/favicons/safari-pinned-tab.svg" color="#00bf7c">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" type="text/css" href="/static/css/application.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/dygraph.css">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed:300,400,600|IBM+Plex+Sans:300,400" rel="stylesheet">
+  <script type="text/javascript" src="/static/js/application.js"></script>
+  <script type="text/javascript" src="/static/js/dygraph.min.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-77259424-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-77259424-1');
+  </script>
+</head>
+
+<body class="">
+  
+  <!-- site-header -->
+<header class="site-header">
+  <div class="container-ko">
+    <div class="d-flex">
+      <div class="site-brand">
+        <a class="logo-kickoffai" href="/"><span>Kickoff.ai</span></a>
+      </div>
+
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/matches">Matches</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/teams">Teams</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://blog.kickoff.ai">Blog</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-flex">
+      <form action="/search-team" method="post">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><img src="/static/img/icon-search.svg"></span>
+          </div>
+          <input type="text" class="form-control" placeholder="Search teams..." aria-label="" aria-describedby="" style="border-left: none;"
+              name="query" value="">
+        </div>
+      </form>
+
+      <div class="dropdown">
+        <button class="site-header-toggler" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="site-header-toggler-icon">
+            <img src="/static/img/icon-menu.svg" alt="Menu">
+          </span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="">
+          <a class="dropdown-item" href="/matches#">Matches</a>
+          <a class="dropdown-item" href="/teams">Teams</a>
+          <a class="dropdown-item" href="/about">About</a>
+          <a class="dropdown-item" href="https://blog.kickoff.ai">Blog</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+<!-- /site-header -->
+
+  <!-- masthead -->
+  <div class="masthead">
+    <div class="container-ko">
+      <h1>Matches</h1>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ES La Liga
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/matches">All competitions</a>
+          
+            <a class="dropdown-item" href="/matches/31">DE Bundesliga</a>
+          
+            <a class="dropdown-item" href="/matches/29">ES La Liga</a>
+          
+            <a class="dropdown-item" href="/matches/2">Friendlies</a>
+          
+            <a class="dropdown-item" href="/matches/35">FR Ligue 1</a>
+          
+            <a class="dropdown-item" href="/matches/33">IT Serie A</a>
+          
+            <a class="dropdown-item" href="/matches/27">UK Premier League</a>
+          
+            <a class="dropdown-item" href="/matches/14">World Cup</a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /masthead -->
+
+  
+
+<!-- matches -->
+<div id="matches" class="section">
+  <div class="container-ko clearfix">
+
+    <!-- fixtures -->
+    <div class="col-hlf-ko">
+      <div class="section-header border-bottom">
+        <h3>Upcoming matches</h3>
+      </div>
+      
+      <!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65526">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Eibar</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">44%</span>
+    <span class="prediction-draw text-muted">28%</span>
+    <span class="prediction-win-away">28%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 44%"
+          aria-valuenow="44" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Eibar wins (44 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 28%"
+        aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 28%"
+          aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          12:00 29 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Levante</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65527">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Valencia</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">56%</span>
+    <span class="prediction-draw text-muted">25%</span>
+    <span class="prediction-win-away">19%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 56%"
+          aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Valencia wins (56 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 25%"
+        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 19%"
+          aria-valuenow="19" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          15:00 29 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Real Betis</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65528">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Leganes</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">43%</span>
+    <span class="prediction-draw text-muted">29%</span>
+    <span class="prediction-win-away">28%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 43%"
+          aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Leganes wins (43 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 29%"
+        aria-valuenow="29" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 28%"
+          aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          17:30 29 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Alavés</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65529">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Granada</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">48%</span>
+    <span class="prediction-draw text-muted">28%</span>
+    <span class="prediction-win-away">24%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 48%"
+          aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Granada wins (48 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 28%"
+        aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 24%"
+          aria-valuenow="24" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          20:00 29 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Celta Vigo</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65545">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Sevilla</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">61%</span>
+    <span class="prediction-draw text-muted">24%</span>
+    <span class="prediction-win-away">15%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 61%"
+          aria-valuenow="61" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Sevilla wins (61 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 24%"
+        aria-valuenow="24" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 15%"
+          aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          11:00 01 March
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Osasuna</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65546">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Ath. Bilbao</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home text-scale-100">41%</span>
+    <span class="prediction-draw text-muted">29%</span>
+    <span class="prediction-win-away">30%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 41%"
+          aria-valuenow="41" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Ath. Bilbao wins (41 %)"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 29%"
+        aria-valuenow="29" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 30%"
+          aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          13:00 01 March
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Villarreal</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65547">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Espanyol</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home">25%</span>
+    <span class="prediction-draw text-muted">28%</span>
+    <span class="prediction-win-away text-scale-100">47%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 25%"
+          aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 28%"
+        aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 47%"
+          aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Atlético Madrid wins (47 %)"></div>
+  </div>
+
+        <div class="match-time-list">
+          15:00 01 March
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Atlético Madrid</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture --><!-- prediction: fixture -->
+  <div class="prediction prediction-fixture">
+    <a href="/match/65548">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Mallorca</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="prediction-percentages">
+    <span class="prediction-win-home">27%</span>
+    <span class="prediction-draw text-muted">29%</span>
+    <span class="prediction-win-away text-scale-100">44%</span>
+  </div>
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 27%"
+          aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300 " role="progressbar" style="width: 29%"
+        aria-valuenow="29" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 44%"
+          aria-valuenow="44" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="Most likely result:<br>Getafe CF wins (44 %)"></div>
+  </div>
+
+        <div class="match-time-list">
+          17:30 01 March
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Getafe CF</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: fixture -->
+
+      <div class="btn-container-md">
+          <button type="button" class="btn btn-secondary btn-block mt-5 more-matches"
+              data-url="/more-matches?which=fixtures&amp;cid=29&amp;offset=8">Show more</button>
+        </div>
+    </div>
+    <!-- /fixtures -->
+
+    <!-- results -->
+    <div class="col-hlf-ko">
+      <div class="section-header border-bottom">
+        <h3>Past results</h3>
+      </div>
+
+      <!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/65505">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Real Sociedad</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          1 : 0
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-100" role="progressbar" style="width: 60%"
+          aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 60%.<br>We aced it!"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 24%"
+          aria-valuenow="24" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 16%"
+          aria-valuenow="16" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          20:00 28 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Valladolid</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/65499">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Atlético Madrid</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          3 : 1
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-200" role="progressbar" style="width: 55%"
+          aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 55%.<br>We made the right call."></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 26%"
+          aria-valuenow="26" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 19%"
+          aria-valuenow="19" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          20:00 23 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Villarreal</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/65498">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Getafe CF</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          0 : 3
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 50%"
+          aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 27%"
+          aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-500" role="progressbar" style="width: 23%"
+          aria-valuenow="23" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 23%.<br>That&#39;s quite a surprise!"></div>
+  </div>
+
+        <div class="match-time-list">
+          17:30 23 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Sevilla</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/65497">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Valladolid</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          2 : 1
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-300" role="progressbar" style="width: 46%"
+          aria-valuenow="46" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 46%.<br>That went as expected."></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 28%"
+          aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 26%"
+          aria-valuenow="26" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          15:00 23 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Espanyol</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/65496">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Alavés</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          2 : 1
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-300" role="progressbar" style="width: 38%"
+          aria-valuenow="38" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 38%.<br>That went as expected."></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 30%"
+          aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 32%"
+          aria-valuenow="32" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          13:00 23 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Ath. Bilbao</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/65495">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Osasuna</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          0 : 3
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 47%"
+          aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 28%"
+          aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-scale-500" role="progressbar" style="width: 25%"
+          aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 25%.<br>That&#39;s quite a surprise!"></div>
+  </div>
+
+        <div class="match-time-list">
+          11:00 23 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Granada</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/65480">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Levante</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          1 : 0
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-500" role="progressbar" style="width: 20%"
+          aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 20%.<br>That&#39;s quite a surprise!"></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 27%"
+          aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 53%"
+          aria-valuenow="53" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          20:00 22 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Real Madrid</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result --><!-- prediction: result -->
+  <div class="prediction prediction-result">
+    <a href="/match/65479">
+      <div class="team-home">
+        <span class="flag-icon flag-icon-es"></span><span class="team-name">Real Sociedad</span>
+      </div>
+
+      <div class="prediction-details">
+        <div class="result">
+          3 : 0
+        </div>
+
+        
+  
+  
+
+  <div class="progress bg-gray-400">
+    <div class="progress-bar bg-scale-300" role="progressbar" style="width: 43%"
+          aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"
+          data-toggle="tooltip" data-html="true" data-placement="top"
+          title="We predicted 43%.<br>That went as expected."></div>
+    <div class="progress-bar bg-gray-300" role="progressbar" style="width: 29%"
+          aria-valuenow="29" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-gray-400" role="progressbar" style="width: 28%"
+          aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+        <div class="match-time-list">
+          17:30 22 February
+        </div> 
+      </div>
+
+      <div class="team-away">
+        <span class="team-name">Valencia</span><span class="flag-icon flag-icon-es"></span>
+      </div>
+    </a>
+  </div>
+  <!-- /prediction: result -->
+
+      <div class="btn-container-md">
+          <button type="button" class="btn btn-secondary btn-block mt-5 more-matches"
+              data-url="/more-matches?which=results&amp;cid=29&amp;offset=8">Show more</button>
+        </div>
+    </div>
+    <!-- /results -->
+
+  </div>
+
+  <div class="container-ko btn-container">
+      <button type="button" class="btn btn-secondary btn-block mt-5 more-matches-all">Show more</button>
+    </div>
+</div>
+<!-- /matches -->
+
+  <!-- site-footer -->
+<footer class="site-footer clearfix">
+  <div class="container-ko">
+    <div class="col-hlf-ko section-newsletter">
+      <h6 class="mb-4">Stay tuned by email</h6>
+
+      <form action="https://kickoff.us13.list-manage.com/subscribe/post?u=e1aea58fcff35871e609d0ae2&amp;id=a7628c9b37" method="post"
+          id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="input-group" target="_blank" novalidate>
+	    <input type="email" class="form-control" placeholder="Your e-mail address" aria-label="" aria-describedby=""
+            value="" name="EMAIL" id="mce-EMAIL">
+        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <input type="text" name="b_e1aea58fcff35871e609d0ae2_a7628c9b37" tabindex="-1" value="">
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-secondary" type="submit"><img src="/static/img/icon-arrow-right.svg"></button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-hlf-ko d-flex justify-content-between">
+      <div class="section-connect">
+        <h6 class="mb-4">Connect</h6>
+
+        <a href="https://www.facebook.com/KickoffAI" class="btn btn-secondary btn-only-icon"><span>Facebook</span><img src="/static/img/icon-facebook.svg"></a>
+        <a href="https://twitter.com/KickoffAI" class="btn btn-secondary btn-only-icon"><span>Twitter</span><img src="/static/img/icon-twitter.svg"></a>
+      </div>
+      <div class="text-right section-sponsored">
+        <h6 class="mb-4">Sponsored by</h6>
+
+        <a href="https://www.epfl.ch/"><img src="/static/img/logo-epfl.svg" class="logo-epfl " alt="EPFL"></a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+<!-- /site-footer -->
+
+</body>
+</html>
