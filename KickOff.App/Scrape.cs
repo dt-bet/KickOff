@@ -18,7 +18,7 @@ namespace KickOff.App
         const string KickOffAIHomePage = "http://kickoff.ai";
         const string MatchSection = "matches";
         const string LogFileName = "Log.txt";
-        const string DateFormat = "dd_MM_yy";
+        public const string DateFormat = "dd_MM_yy";
 
 
 
@@ -31,7 +31,7 @@ namespace KickOff.App
 
         public static void ScrapeByType(Type type)
         {
-            string date = DateTime.Now.ToString(DateFormat);
+            DateTime date = DateTime.Now;
 
             DirectoryInfo info = ProcessHtml.Info();
             using (var enumerator = GetCompetitionEnumerator())
@@ -46,13 +46,13 @@ namespace KickOff.App
 
         public static void ProcessFailures()
         {
-
+            DateTime date = DateTime.Now;
             DirectoryInfo info = ProcessHtml.Info();
             using (var enumerator = GetCompetitionEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
-                    ProcessFailures(info, (int)enumerator.Current);
+                    ProcessFailures(info, date, (int)enumerator.Current);
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace KickOff.App
         }
 
 
-        private static void Process(DirectoryInfo info, string date, string competition, Type type)
+        private static void Process(DirectoryInfo info, DateTime date, string competition, Type type)
         {
             string competitionURL = string.Join("/", new[] { KickOffAIHomePage, MatchSection, competition });
 
@@ -81,9 +81,9 @@ namespace KickOff.App
             try
             {
                 if (type == Type.Fixture)
-                    ProcessFixtures(htmlCode, int.Parse(competition));
+                    ProcessFixtures(htmlCode, date, int.Parse(competition));
                 else if (type == Type.Result)
-                    ProcessResults(htmlCode, int.Parse(competition));
+                    ProcessResults(htmlCode, date, int.Parse(competition));
                 else
                     throw new ArgumentException($"type {type} not accounted for.");
             }
@@ -96,7 +96,7 @@ namespace KickOff.App
         }
 
 
-        private static void ProcessFailures(DirectoryInfo info, int comp)
+        private static void ProcessFailures(DirectoryInfo info, DateTime date, int comp)
         {
 
             string directoryPath = info + "/" + comp.ToString();
@@ -112,11 +112,10 @@ namespace KickOff.App
 
             foreach (var path in from path in Directory.GetFiles(directoryPath)
                                  let file = Path.GetFileNameWithoutExtension(path)
-                                 let split = file.Split('_')
-                                 orderby string.Join('_',split[2], split[1], split[0])
+                                 orderby DateTime.ParseExact(file, DateFormat, CultureInfo.InvariantCulture)
                                  join r in records
-                                 on file  equals r.Date 
-                                 into temp 
+                                 on file equals r.Date
+                                 into temp
                                  where temp.Any() == false
                                  select path)
             {
@@ -125,8 +124,8 @@ namespace KickOff.App
 
                 try
                 {
-                    ProcessFixtures(doc, comp);
-                    ProcessResults(doc,comp);
+                    ProcessFixtures(doc, date, comp);
+                    ProcessResults(doc, date, comp);
                     using (var connection = Db.GetConnection())
                     {
                         int inserted = connection.Insert(new Record(comp, path));
@@ -142,14 +141,11 @@ namespace KickOff.App
         }
 
 
-        public static void ProcessFixtures(HtmlDocument document, int competition)
+        public static void ProcessFixtures(HtmlDocument document, DateTime date, int competition)
         {
             using (var connection = Db.GetConnection())
             {
-
-
-                var fixtures = ProcessHtml.GetFixturePredictions(document, competition).ToArray();
-
+                var fixtures = ProcessHtml.GetFixturePredictions(document, date, competition).ToArray();
                 var arr = connection.Table<ScrapeFixture>().ToArray();
                 var exception = fixtures.Except(arr);
                 int processed = connection.InsertAll(exception);
@@ -157,16 +153,16 @@ namespace KickOff.App
             }
         }
 
-        public static void ProcessResults(HtmlDocument document, int competition)
+        public static void ProcessResults(HtmlDocument document, DateTime date, int competition)
         {
 
             using (var connection = Db.GetConnection())
             {
-                var results = ProcessHtml.GetResultPredictions(document, competition).ToArray();
+                var results = ProcessHtml.GetResultPredictions(document, date, competition).ToArray();
 
                 var arr = connection.Table<ScrapeResult>().ToArray();
                 var exception = results.Except(arr);
-                int processed= connection.InsertAll(exception);
+                int processed = connection.InsertAll(exception);
                 Console.WriteLine("Inserted Results " + processed);
             }
 

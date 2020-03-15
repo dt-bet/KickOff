@@ -36,6 +36,10 @@ namespace KickOff.App
                 {
                     ScrapeUtility.ProcessFailures();
                 }
+                else if (args[0] == "process_all")
+                {
+                    ProcessAll();
+                }
             }
             catch (Exception ex)
             {
@@ -71,6 +75,22 @@ namespace KickOff.App
 
         }
 
+
+        public static void ProcessAll()
+        {
+
+            ProcessHtml.ProcessAllResults((int)Scrape.Entity.League.EnglandPremierLeague);
+            ProcessHtml.ProcessAllResults((int)Scrape.Entity.League.FranceLigue1);
+            ProcessHtml.ProcessAllResults((int)Scrape.Entity.League.SpainPrimeraDivisión);
+            ProcessHtml.ProcessAllResults((int)Scrape.Entity.League.GermanyBundesliga);
+            ProcessHtml.ProcessAllResults((int)Scrape.Entity.League.WorldFriendlies);
+            ProcessHtml.ProcessAllResults((int)Scrape.Entity.League.ItalySerieA);
+            //ProcessHtml.ProcessFixtures();
+            Console.WriteLine("Finished");
+            Console.ReadKey();
+
+
+        }
 
         //public static void Evaluate()
         //{

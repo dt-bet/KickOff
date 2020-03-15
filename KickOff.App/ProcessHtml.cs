@@ -12,7 +12,7 @@ namespace KickOff.App
     public class ProcessHtml
     {
 
-        public static DirectoryInfo Info() => System.IO.Directory.CreateDirectory("../../../Data");
+        public static DirectoryInfo Info() => System.IO.Directory.CreateDirectory("../../Data");
 
 
         public static void ProcessResults(int league)
@@ -20,18 +20,52 @@ namespace KickOff.App
             var connection = Db.GetConnection();
             connection.CreateTable<ScrapeResult>();
 
-            var rp = GetResultPredictions(GetHtmlDocument(league), league).ToArray();
 
-            var results = connection.Table<ScrapeResult>().ToArray();
-            connection.InsertAll(rp.OfType<ScrapeResult>().Except(results));
+            //var rp = GetResultPredictions(GetHtmlDocument(league), league).ToArray();
 
-            var fixtures = connection.Table<ScrapeFixture>().ToArray();
-            connection.InsertAll(rp.OfType<ScrapeFixture>().Except(fixtures));
+            //var results = connection.Table<ScrapeResult>().ToArray();
+            //connection.InsertAll(rp.OfType<ScrapeResult>().Except(results));
+
+            //var fixtures = connection.Table<ScrapeFixture>().ToArray();
+            //connection.InsertAll(rp.OfType<ScrapeFixture>().Except(fixtures));
         }
 
 
 
-        public static IEnumerable<ScrapeMatch> GetResultPredictions(HtmlDocument document,int competition=0)
+        public static void ProcessAllResults(int league)
+        {
+            var connection = Db.GetConnection();
+            connection.CreateTable<ScrapeResult>();
+            connection.CreateTable<ScrapeFixture>();
+            var results = connection.Table<ScrapeResult>().ToList();
+            var fixtures = connection.Table<ScrapeFixture>().ToList();
+
+
+            foreach (var (file, date) in from file in Directory.EnumerateFiles("../../../Data/" + league, "??_??_??")
+                                         let name = Path.GetFileNameWithoutExtension(file)
+                                         let date = GetDate(name)
+                                         orderby date
+                                         select (file, date))
+            {
+                var rp = GetResultPredictions(GetHtmlDocument(file), date, league).ToArray();
+
+                var newResults = rp.OfType<ScrapeResult>();
+                var newFixtures = rp.OfType<ScrapeFixture>();
+                var exepResults = newResults.Except(results).ToArray();
+                var exepFixtures = newFixtures.Except(fixtures).ToArray();
+
+                connection.InsertAll(exepResults);
+                connection.InsertAll(exepFixtures);
+
+                results.AddRange(exepResults);
+                fixtures.AddRange(exepFixtures);
+
+                Console.WriteLine(new FileInfo(file).Name);
+            }
+        }
+
+
+        public static IEnumerable<ScrapeMatch> GetResultPredictions(HtmlDocument document, DateTime year, int competition = 0)
         {
 
             foreach (var node in GetResultNodes(document))
@@ -47,7 +81,7 @@ namespace KickOff.App
                 {
                     homeTeam = GetHomeTeam(node);
                     awayTeam = GetAwayTeam(node);
-                    date = GetDate(node);
+                    date = GetResultDate(node, year);
                     score = GetResult(node);
                     prediction = GetPrediction(node);
                     b = true;
@@ -81,7 +115,7 @@ namespace KickOff.App
             }
         }
 
-        public static IEnumerable<ScrapeFixture> GetFixturePredictions(HtmlDocument document, int competition)
+        public static IEnumerable<ScrapeFixture> GetFixturePredictions(HtmlDocument document, DateTime year, int competition)
         {
             foreach (var node in GetFixtureNodes(document))
             {
@@ -95,7 +129,7 @@ namespace KickOff.App
                 {
                     homeTeam = GetHomeTeam(node);
                     awayTeam = GetAwayTeam(node);
-                    date = GetDate(node);
+                    date = GetFixtureDate(node, year);
                     prediction = GetPrediction(node);
                     b = true;
                 }
@@ -117,12 +151,18 @@ namespace KickOff.App
             }
         }
 
+        private static DateTime GetDate(string fileName)
+        {
+            return DateTime.Parse(fileName.Replace('_', '-'));
+                           
+        }
+
         static string GetHomeTeam(HtmlNode node)
         {
             return node.QuerySelector("div.team-home > span.team-name").InnerText;
         }
 
-        static DateTime GetDate(HtmlNode node)
+        static DateTime GetFixtureDate(HtmlNode node, DateTime fileDate)
         {
             var cc = node.QuerySelector("a div.match-time-list").InnerText.Replace('\n', ' ').Trim();
 
@@ -131,6 +171,38 @@ namespace KickOff.App
                CultureInfo.InvariantCulture,
                    DateTimeStyles.None,
                out DateTime dateTime);
+
+            dateTime = dateTime.AddYears(fileDate.Year - dateTime.Year);
+
+            if (dateTime.DayOfYear < fileDate.DayOfYear)
+                dateTime = dateTime.AddYears(1);
+
+            return dateTime;
+
+        }
+        static DateTime GetResultDate(HtmlNode node, DateTime fileDate)
+        {
+            var cc = node.QuerySelector("a div.match-time-list").InnerText.Replace('\n', ' ').Trim();
+
+            bool success = DateTime.TryParseExact(cc,
+                   "HH:mm dd MMMM",
+               CultureInfo.InvariantCulture,
+                   DateTimeStyles.None,
+               out DateTime dateTime);
+
+            if(success==false)
+            {
+
+            }
+
+            dateTime= dateTime.AddYears(fileDate.Year - dateTime.Year);
+
+            if (dateTime.DayOfYear > fileDate.DayOfYear)
+                dateTime = dateTime.AddYears(-1);
+            else
+            {
+
+            }
 
             return dateTime;
 
@@ -212,7 +284,17 @@ namespace KickOff.App
 
             return doc;
         }
+
+        static HtmlDocument GetHtmlDocument(string path)
+        {
+            var doc = new HtmlDocument();
+
+            doc.Load(path);
+
+            return doc;
+        }
     }
+
 
 
 
