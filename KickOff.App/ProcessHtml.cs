@@ -12,14 +12,13 @@ namespace KickOff.App
     public class ProcessHtml
     {
 
-        public static DirectoryInfo Info() => System.IO.Directory.CreateDirectory("../../Data");
+        public static DirectoryInfo Info() => System.IO.Directory.CreateDirectory("../../../Data");
 
 
         public static void ProcessResults(int league)
         {
             var connection = Db.GetConnection();
             connection.CreateTable<ScrapeResult>();
-
 
             //var rp = GetResultPredictions(GetHtmlDocument(league), league).ToArray();
 

@@ -18,8 +18,8 @@ namespace KickOff.App
         const string KickOffAIHomePage = "http://kickoff.ai";
         const string MatchSection = "matches";
         const string LogFileName = "Log.txt";
-        public const string DateFormat = "dd_MM_yy";
-
+        public const string OldDateFormat = "dd_MM_yy";
+        public const string NewDateFormat = "yy-MM-dd";
 
 
         public enum Type { Fixture, Result }
@@ -40,6 +40,29 @@ namespace KickOff.App
                 {
                     Thread.Sleep(1000);
                     Process(info, date, ((int)enumerator.Current).ToString(), type);
+                }
+            }
+        }
+
+        public static void ModifyAllFiles()
+        {
+
+            DirectoryInfo info = ProcessHtml.Info();
+            using (var enumerator = GetCompetitionEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    string directoryPath = info + "\\" + ((int)enumerator.Current).ToString();
+                    foreach (var file in new DirectoryInfo(directoryPath).GetFiles("??_??_19"))
+                    {
+                        var dt = DateTime.ParseExact(file.Name, OldDateFormat, CultureInfo.InvariantCulture);
+                        file.MoveTo(Path.Combine(directoryPath, dt.ToString(NewDateFormat)));
+                    }
+                    foreach (var file in new DirectoryInfo(directoryPath).GetFiles("??_??_20"))
+                    {
+                        var dt = DateTime.ParseExact(file.Name, OldDateFormat, CultureInfo.InvariantCulture);
+                        file.MoveTo(Path.Combine(directoryPath, dt.ToString(NewDateFormat)));
+                    }
                 }
             }
         }
@@ -71,9 +94,9 @@ namespace KickOff.App
         {
             string competitionURL = string.Join("/", new[] { KickOffAIHomePage, MatchSection, competition });
 
-            string directoryPath = info + "/" + competition;
+            string directoryPath = info + "\\" + competition;
             System.IO.Directory.CreateDirectory(directoryPath);
-            string fileName = directoryPath + "/" + date;
+            string fileName = directoryPath + "\\" + date.ToString(NewDateFormat);
 
             HtmlDocument htmlCode = new HtmlWeb().Load(competitionURL);
             System.IO.File.WriteAllText(fileName, htmlCode.ParsedText);
@@ -112,7 +135,7 @@ namespace KickOff.App
 
             foreach (var path in from path in Directory.GetFiles(directoryPath)
                                  let file = Path.GetFileNameWithoutExtension(path)
-                                 orderby DateTime.ParseExact(file, DateFormat, CultureInfo.InvariantCulture)
+                                 orderby DateTime.ParseExact(file, NewDateFormat, CultureInfo.InvariantCulture)
                                  join r in records
                                  on file equals r.Date
                                  into temp

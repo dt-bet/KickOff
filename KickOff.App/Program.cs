@@ -40,6 +40,10 @@ namespace KickOff.App
                 {
                     ProcessAll();
                 }
+                else if (args[0] == "modify_dates")
+                {
+                    ScrapeUtility.ModifyAllFiles();
+                }
             }
             catch (Exception ex)
             {
