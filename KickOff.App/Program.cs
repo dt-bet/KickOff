@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using KickOff;
 
@@ -8,9 +9,12 @@ namespace KickOff.App
     {
         public static void Main(string[] args)
         {
-            SQLitePCL.Batteries.Init();
+            Console.WriteLine("KickOff");
+
             try
             {
+                SQLitePCL.Batteries.Init();
+             
                 if (args.Length == 0)
                 {
                     try
@@ -47,9 +51,11 @@ namespace KickOff.App
             }
             catch (Exception ex)
             {
+                File.AppendAllLines(ScrapeUtility.LogFile(), new[] { ex.StackTrace });
                 Console.WriteLine(ex.StackTrace);
-                Console.Read();
             }
+
+            Console.Read();
         }
 
 

@@ -24,7 +24,7 @@ namespace KickOff.App
 
         public enum Type { Fixture, Result }
 
-        private static string LogFile() => ProcessHtml.Info().FullName + "/" + LogFileName;
+        public static string LogFile() => ProcessHtml.Info().FullName + "/" + LogFileName;
 
 
 
